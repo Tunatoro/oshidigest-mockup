@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OshiDigest - UI Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== DESIGN TOKENS ===== */
+  :root {
+    --primary:       #9B72CF;
+    --primary-light: #C4A4E8;
+    --secondary:     #F4A7C3;
+    --accent:        #FFD6EC;
+    --bg:            #FDFAFF;
+    --surface:       #F5EDFF;
+    --surface2:      #EDE0FF;
+    --text-primary:  #2D2040;
+    --text-secondary:#7B6F8A;
+    --text-muted:    #A89FBA;
+    --success:       #B5E8C8;
+    --success-text:  #2D7A50;
+    --warning:       #FFB347;
+    --error:         #FF7C7C;
+    --white:         #FFFFFF;
+    --gradient-main: linear-gradient(135deg, #9B72CF 0%, #F4A7C3 100%);
+    --gradient-soft: linear-gradient(135deg, #F5EDFF 0%, #FFD6EC 100%);
+    --shadow-sm:     0 2px 8px rgba(155,114,207,0.12);
+    --shadow-md:     0 4px 20px rgba(155,114,207,0.18);
+    --shadow-lg:     0 8px 40px rgba(155,114,207,0.25);
+    --radius-sm:     10px;
+    --radius-md:     16px;
+    --radius-lg:     24px;
+    --radius-full:   999px;
+    --font-main:     'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
+  }
+
+  /* ===== RESET ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-main);
+    background: #F0E8FF;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 48px;
+    gap: 32px;
+  }
+
+  /* ===== PAGE TITLE ===== */
+  .page-title {
+    text-align: center;
+  }
+  .page-title h1 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+  }
+  .page-title p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* ===== SCREEN TABS ===== */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    background: rgba(255,255,255,0.7);
+    padding: 6px;
+    border-radius: var(--radius-full);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-sm);
+  }
+  .tab {
+    padding: 8px 18px;
+    border-radius: var(--radius-full);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    transition: all 0.2s ease;
+    font-family: var(--font-main);
+  }
+  .tab.active {
+    background: var(--gradient-main);
+    color: white;
+    box-shadow: 0 2px 12px rgba(155,114,207,0.4);
+  }
+
+  /* ===== PHONE FRAME ===== */
+  .phone-frame {
+    width: 375px;
+    min-height: 812px;
+    background: var(--bg);
+    border-radius: 44px;
+    box-shadow: var(--shadow-lg), 0 0 0 10px #2D2040, 0 0 0 12px #1a1025;
+    overflow: hidden;
+    position: relative;
+    display: none;
+  }
+  .phone-frame.active { display: block; }
+
+  /* Status bar */
+  .status-bar {
+    height: 44px;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+  }
+  .status-time { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  .status-icons span { font-size: 12px; color: var(--text-primary); }
+
+  /* Notch */
+  .notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 34px;
+    background: #2D2040;
+    border-radius: 0 0 20px 20px;
+    z-index: 10;
+  }
+
+  /* ===== SCREEN CONTENT ===== */
+  .screen-content {
+    height: 768px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+  .screen-content::-webkit-scrollbar { display: none; }
+
+  /* ===== BOTTOM NAV ===== */
+  .bottom-nav {
+    position: sticky;
+    bottom: 0;
+    background: rgba(253,250,255,0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--surface2);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0 20px;
+    z-index: 100;
+  }
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+  }
+  .nav-icon { font-size: 22px; }
+  .nav-label { font-size: 10px; color: var(--text-muted); font-weight: 500; }
+  .nav-item.active .nav-label { color: var(--primary); font-weight: 700; }
+  .nav-item.active .nav-icon { filter: drop-shadow(0 0 4px rgba(155,114,207,0.5)); }
+
+  /* ===== SCREEN 1: DIGEST ===== */
+
+  /* Cover Header */
+  .digest-cover {
+    background: var(--gradient-main);
+    padding: 20px 20px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .digest-cover::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 50%;
+  }
+  .digest-cover::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -20px;
+    width: 100px; height: 100px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .digest-week {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .digest-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .digest-date {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+  }
+  .digest-badge {
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: var(--radius-full);
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+  }
+
+  /* Progress bar */
+  .read-progress {
+    height: 3px;
+    background: var(--surface2);
+  }
+  .read-progress-bar {
+    height: 100%;
+    width: 35%;
+    background: var(--gradient-main);
+    border-radius: 2px;
+  }
+
+  /* Stat cards */
+  .stats-row {
+    display: flex;
+    gap: 10px;
+    padding: 16px 16px 4px;
+  }
+  .stat-card {
+    flex: 1;
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 14px 12px;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+
+  /* Achievement card */
+  .achievement-card {
+    margin: 12px 16px;
+    background: var(--gradient-soft);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--accent);
+  }
+  .achievement-emoji { font-size: 32px; }
+  .achievement-text { flex: 1; }
+  .achievement-text strong {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .achievement-text span {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .share-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-full);
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font-main);
+  }
+
+  /* Section */
+  .section {
+    padding: 16px 16px 4px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+  .section-title .icon {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .icon-x { background: #2D2040; }
+  .icon-yt { background: #FF4444; }
+  .icon-cal { background: var(--primary); }
+  .section-more {
+    font-size: 12px;
+    color: var(--primary);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* News card */
+  .news-card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 10px;
+  }
+  .news-card-img {
+    width: 100%;
+    height: 140px;
+    background: var(--gradient-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    position: relative;
+  }
+  .news-card-img-alt {
+    height: 80px;
+    background: var(--surface);
+  }
+  .news-tag {
+    position: absolute;
+    top: 10px; left: 10px;
+    background: rgba(255,255,255,0.9);
+    border-radius: var(--radius-full);
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .news-card-body { padding: 12px 14px 14px; }
+  .news-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  .news-card-summary {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .news-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .news-source {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .news-action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .news-action span { font-size: 18px; cursor: pointer; }
+
+  /* Compact news */
+  .compact-news {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 8px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .compact-news .thumb {
+    width: 60px; height: 60px;
+    border-radius: 10px;
+    background: var(--gradient-main);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+  .compact-news-body { flex: 1; }
+  .compact-news-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+  .compact-news-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* Schedule card */
+  .schedule-card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .schedule-date {
+    background: var(--gradient-main);
+    border-radius: 12px;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .schedule-date .month { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.85); }
+  .schedule-date .day { font-size: 22px; font-weight: 800; color: white; line-height: 1; }
+  .schedule-info { flex: 1; }
+  .schedule-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
+  .schedule-sub { font-size: 12px; color: var(--text-secondary); }
+  .schedule-badge {
+    background: var(--success);
+    color: var(--success-text);
+    border-radius: var(--radius-full);
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .countdown-chip {
+    background: var(--accent);
+    border-radius: var(--radius-full);
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  /* AI comment */
+  .ai-comment {
+    margin: 12px 16px;
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--primary);
+  }
+  .ai-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 6px;
+  }
+  .ai-text {
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.7;
+  }
+
+  .spacer { height: 80px; }
+
+  /* ===== SCREEN 2: DASHBOARD ===== */
+
+  .dash-header {
+    background: var(--gradient-main);
+    padding: 20px 20px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .dash-header::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -30px;
+    width: 180px; height: 180px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+  }
+  .dash-greeting { font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 4px; }
+  .dash-user { font-size: 22px; font-weight: 800; color: white; margin-bottom: 14px; }
+  .dash-stats-row {
+    display: flex;
+    gap: 10px;
+  }
+  .dash-stat {
+    flex: 1;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .dash-stat .num { font-size: 22px; font-weight: 800; color: white; }
+  .dash-stat .lbl { font-size: 11px; color: rgba(255,255,255,0.8); }
+
+  .section-title-sm {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-primary);
+    padding: 16px 16px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Next event banner */
+  .next-event {
+    margin: 0 16px 4px;
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 2px solid var(--accent);
+  }
+  .next-event-icon { font-size: 28px; }
+  .next-event-info { flex: 1; }
+  .next-event-label { font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 2px; }
+  .next-event-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+  .next-event-date { font-size: 12px; color: var(--text-secondary); }
+  .next-event-countdown {
+    background: var(--gradient-main);
+    color: white;
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .next-event-countdown .days { font-size: 24px; font-weight: 800; line-height: 1; }
+  .next-event-countdown .days-lbl { font-size: 10px; }
+
+  /* Digest ready banner */
+  .digest-ready {
+    margin: 12px 16px;
+    background: var(--gradient-main);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+  }
+  .digest-ready-icon { font-size: 32px; }
+  .digest-ready-text { flex: 1; }
+  .digest-ready-text strong { font-size: 15px; font-weight: 800; color: white; display: block; margin-bottom: 2px; }
+  .digest-ready-text span { font-size: 12px; color: rgba(255,255,255,0.8); }
+  .digest-ready-arrow { font-size: 20px; color: white; }
+
+  /* Oshi cards */
+  .oshi-list { padding: 4px 16px; }
+  .oshi-card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .oshi-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--gradient-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    border: 2px solid var(--accent);
+  }
+  .oshi-avatar.blue { background: linear-gradient(135deg, #72B5CF, #A4D4F4); }
+  .oshi-avatar.pink { background: linear-gradient(135deg, #CF72AB, #F4A4D0); }
+  .oshi-info { flex: 1; }
+  .oshi-name { font-size: 15px; font-weight: 800; color: var(--text-primary); margin-bottom: 2px; }
+  .oshi-sub { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+  .oshi-platforms {
+    display: flex;
+    gap: 5px;
+  }
+  .platform-tag {
+    background: var(--surface);
+    color: var(--primary);
+    border-radius: var(--radius-full);
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .oshi-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+  .update-badge {
+    background: var(--gradient-main);
+    color: white;
+    border-radius: var(--radius-full);
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .update-time { font-size: 11px; color: var(--text-muted); }
+
+  /* Add oshi */
+  .add-oshi {
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    border: 2px dashed var(--primary-light);
+    margin: 0 0 8px;
+  }
+  .add-oshi span { font-size: 14px; font-weight: 700; color: var(--primary); }
+
+  /* ===== SCREEN 3: PRICING ===== */
+
+  .pricing-header {
+    background: var(--gradient-main);
+    padding: 24px 20px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .pricing-header::before {
+    content: '';
+    position: absolute;
+    top: -40px; left: -40px;
+    width: 160px; height: 160px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+  }
+  .pricing-header h2 { font-size: 22px; font-weight: 800; color: white; margin-bottom: 6px; }
+  .pricing-header p { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.5; }
+
+  .pricing-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 16px 10px;
+  }
+  .toggle-label { font-size: 13px; font-weight: 700; color: var(--text-secondary); }
+  .toggle-label.active { color: var(--primary); }
+  .toggle-track {
+    width: 44px; height: 24px;
+    background: var(--primary);
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+  }
+  .toggle-thumb {
+    position: absolute;
+    right: 3px; top: 3px;
+    width: 18px; height: 18px;
+    background: white;
+    border-radius: 50%;
+  }
+  .save-badge {
+    background: var(--warning);
+    color: white;
+    border-radius: var(--radius-full);
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .plan-cards { padding: 8px 16px; display: flex; flex-direction: column; gap: 12px; }
+
+  .plan-card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    box-shadow: var(--shadow-sm);
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+  .plan-card.popular {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+  }
+  .popular-badge {
+    position: absolute;
+    top: 0; right: 0;
+    background: var(--gradient-main);
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 5px 14px;
+    border-radius: 0 var(--radius-md) 0 var(--radius-md);
+  }
+  .plan-name { font-size: 18px; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
+  .plan-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; }
+  .plan-price-row { display: flex; align-items: baseline; gap: 4px; margin-bottom: 16px; }
+  .plan-price {
+    font-size: 36px; font-weight: 800;
+    background: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .plan-price.free { font-size: 30px; }
+  .plan-price-unit { font-size: 14px; color: var(--text-secondary); font-weight: 700; }
+  .plan-features { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-primary);
+  }
+  .feature-check {
+    width: 18px; height: 18px;
+    background: var(--success);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+  .feature-x {
+    width: 18px; height: 18px;
+    background: var(--surface2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .feature-item.muted { color: var(--text-muted); }
+
+  .plan-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: var(--radius-full);
+    font-size: 15px;
+    font-weight: 800;
+    font-family: var(--font-main);
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+  .plan-btn.primary {
+    background: var(--gradient-main);
+    color: white;
+    box-shadow: 0 4px 16px rgba(155,114,207,0.4);
+  }
+  .plan-btn.secondary {
+    background: var(--surface);
+    color: var(--primary);
+    border: 2px solid var(--primary-light);
+  }
+
+  .pricing-footer { padding: 16px; text-align: center; }
+  .pricing-footer p { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  .pricing-footer strong { color: var(--primary); }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--surface2); margin: 4px 16px; }
+</style>
+</head>
+<body>
+
+<div class="page-title">
+  <h1>💜 OshiDigest UI Mockup</h1>
+  <p>3画面プレビュー（ダミーデータ）</p>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showScreen(1, this)">① ダイジェスト</button>
+  <button class="tab" onclick="showScreen(2, this)">② ダッシュボード</button>
+  <button class="tab" onclick="showScreen(3, this)">③ プラン選択</button>
+</div>
+
+<!-- ========== SCREEN 1: DIGEST ========== -->
+<div class="phone-frame active" id="screen1">
+  <div class="notch"></div>
+  <div class="status-bar">
+    <span class="status-time">9:41</span>
+    <div class="status-icons"><span>●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+
+  <div class="screen-content">
+
+    <!-- Cover -->
+    <div class="digest-cover">
+      <div class="digest-week">✨ WEEK 12 / 2025</div>
+      <div class="digest-title">今週の<br>OshiDigest</div>
+      <div class="digest-date">3月10日（月）〜 3月16日（日）</div>
+      <div class="digest-badge">💜 BTS を追跡中</div>
+    </div>
+
+    <!-- Read progress -->
+    <div class="read-progress"><div class="read-progress-bar"></div></div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-number">47</div>
+        <div class="stat-label">今週の<br>投稿数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5</div>
+        <div class="stat-label">プラット<br>フォーム</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">注目<br>ニュース</div>
+      </div>
+    </div>
+
+    <!-- Achievement -->
+    <div class="achievement-card">
+      <div class="achievement-emoji">🏆</div>
+      <div class="achievement-text">
+        <strong>今週も推しチェック完了！</strong>
+        <span>12週連続でチェックしてるあなたはトップ推し活ママ🥺</span>
+      </div>
+      <button class="share-btn">シェア</button>
+    </div>
+
+    <!-- X Section -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">
+          <div class="icon icon-x">𝕏</div>
+          X ハイライト
+        </div>
+        <span class="section-more">もっと見る →</span>
+      </div>
+
+      <div class="news-card">
+        <div class="news-card-img">
+          🎤
+          <div class="news-tag">📢 新情報</div>
+        </div>
+        <div class="news-card-body">
+          <div class="news-card-title">JIMINが新솔로アルバムのリリースをサプライズ発表</div>
+          <div class="news-card-summary">3月20日に新ソロアルバムをリリースすることが公式Xで発表。ファンの間で「待ってた」「泣いた」の声が続出。</div>
+          <div class="news-card-footer">
+            <div class="news-source">🐦 @BTS_official · 3日前</div>
+            <div class="news-action">
+              <span>🔖</span>
+              <span>↗️</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="compact-news">
+        <div class="thumb">💬</div>
+        <div class="compact-news-body">
+          <div class="compact-news-title">V（テテ）がファンへ「ありがとう」メッセージ投稿。3.2万件のいいね</div>
+          <div class="compact-news-meta">@bts_bighit · 2日前 · X</div>
+        </div>
+      </div>
+
+      <div class="compact-news">
+        <div class="thumb">📸</div>
+        <div class="compact-news-body">
+          <div class="compact-news-title">RM、SUGA の新ビジュアル写真が公開。ファン撮影禁止ショットに注目集まる</div>
+          <div class="compact-news-meta">@bts_bighit · 1日前 · X</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Comment -->
+    <div class="ai-comment">
+      <div class="ai-label">✨ OshiDigest AI のひとこと</div>
+      <div class="ai-text">今週はJIMINのアルバム発表一色でしたね🎵 推し活ママとしては発売日に向けてスケジュール調整が必要かも。子どもが寝た後に一緒に聴きたい！</div>
+    </div>
+
+    <!-- YouTube Section -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">
+          <div class="icon icon-yt">▶</div>
+          YouTube 新着
+        </div>
+        <span class="section-more">もっと見る →</span>
+      </div>
+
+      <div class="compact-news">
+        <div class="thumb">🎬</div>
+        <div class="compact-news-body">
+          <div class="compact-news-title">【BEHIND】ファン感謝イベントの舞台裏映像が13分公開</div>
+          <div class="compact-news-meta">HYBE LABELS · 1日前 · YouTube · 420万回視聴</div>
+        </div>
+      </div>
+
+      <div class="compact-news">
+        <div class="thumb">🎙</div>
+        <div class="compact-news-body">
+          <div class="compact-news-title">「We Are Bulletproof」ライブバージョンフル音源が初公開</div>
+          <div class="compact-news-meta">BANGTAN TV · 3日前 · YouTube · 215万回視聴</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schedule Section -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">
+          <div class="icon icon-cal">📅</div>
+          今後のスケジュール
+        </div>
+        <span class="section-more">カレンダーで見る →</span>
+      </div>
+
+      <div class="schedule-card">
+        <div class="schedule-date">
+          <div class="month">MAR</div>
+          <div class="day">20</div>
+        </div>
+        <div class="schedule-info">
+          <div class="schedule-title">JIMINソロアルバム発売日</div>
+          <div class="schedule-sub">💿 全国CD・サブスク同時解禁</div>
+        </div>
+        <div class="countdown-chip">あと4日</div>
+      </div>
+
+      <div class="schedule-card">
+        <div class="schedule-date">
+          <div class="month">APR</div>
+          <div class="day">5</div>
+        </div>
+        <div class="schedule-info">
+          <div class="schedule-title">BTS World Tour 東京公演</div>
+          <div class="schedule-sub">🏟 東京ドーム / 18:00開演</div>
+        </div>
+        <div class="schedule-badge">🎟 残席わずか</div>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="bottom-nav">
+      <div class="nav-item active">
+        <div class="nav-icon">📰</div>
+        <div class="nav-label">ダイジェスト</div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">📅</div>
+        <div class="nav-label">スケジュール</div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">💜</div>
+        <div class="nav-label">推し一覧</div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">👤</div>
+        <div class="nav-label">マイページ</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== SCREEN 2: DASHBOARD ========== -->
+<div class="phone-frame" id="screen2">
+  <div class="notch"></div>
+  <div class="status-bar">
+    <span class="status-time">9:41</span>
+    <div class="status-icons"><span>●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+
+  <div class="screen-content">
+
+    <!-- Header -->
+    <div class="dash-header">
+      <div class="dash-greeting">おかえり 👋</div>
+      <div class="dash-user">yamamotoさんの推し活 💜</div>
+      <div class="dash-stats-row">
+        <div class="dash-stat">
+          <div class="num">3</div>
+          <div class="lbl">推し登録中</div>
+        </div>
+        <div class="dash-stat">
+          <div class="num">12</div>
+          <div class="lbl">連続週チェック</div>
+        </div>
+        <div class="dash-stat">
+          <div class="num">138</div>
+          <div class="lbl">総ニュース数</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Next event -->
+    <div class="section-title-sm">⚡ 直近のイベント</div>
+    <div class="next-event">
+      <div class="next-event-icon">🎤</div>
+      <div class="next-event-info">
+        <div class="next-event-label">次のイベント</div>
+        <div class="next-event-title">JIMINソロアルバム発売</div>
+        <div class="next-event-date">2025年3月20日（木）</div>
+      </div>
+      <div class="next-event-countdown">
+        <div class="days">4</div>
+        <div class="days-lbl">days</div>
+      </div>
+    </div>
+
+    <!-- Digest ready -->
+    <div class="digest-ready">
+      <div class="digest-ready-icon">📬</div>
+      <div class="digest-ready-text">
+        <strong>今週のダイジェストが届きました</strong>
+        <span>47件の情報をまとめました · 3分前</span>
+      </div>
+      <div class="digest-ready-arrow">→</div>
+    </div>
+
+    <!-- Oshi list -->
+    <div class="section-title-sm">💜 フォロー中の推し</div>
+    <div class="oshi-list">
+      <div class="oshi-card">
+        <div class="oshi-avatar">🎤</div>
+        <div class="oshi-info">
+          <div class="oshi-name">BTS</div>
+          <div class="oshi-sub">K-POP / HYBE Entertainment</div>
+          <div class="oshi-platforms">
+            <span class="platform-tag">X</span>
+            <span class="platform-tag">YouTube</span>
+            <span class="platform-tag">Weverse</span>
+            <span class="platform-tag">+2</span>
+          </div>
+        </div>
+        <div class="oshi-badge">
+          <span class="update-badge">新着 12件</span>
+          <span class="update-time">3分前</span>
+        </div>
+      </div>
+
+      <div class="oshi-card">
+        <div class="oshi-avatar blue">❄️</div>
+        <div class="oshi-info">
+          <div class="oshi-name">Snow Man</div>
+          <div class="oshi-sub">J-POP / Johnny's</div>
+          <div class="oshi-platforms">
+            <span class="platform-tag">X</span>
+            <span class="platform-tag">YouTube</span>
+            <span class="platform-tag">公式サイト</span>
+          </div>
+        </div>
+        <div class="oshi-badge">
+          <span class="update-badge">新着 5件</span>
+          <span class="update-time">1時間前</span>
+        </div>
+      </div>
+
+      <div class="oshi-card">
+        <div class="oshi-avatar pink">🌸</div>
+        <div class="oshi-info">
+          <div class="oshi-name">にじさんじ（叶）</div>
+          <div class="oshi-sub">VTuber / ANYCOLOR</div>
+          <div class="oshi-platforms">
+            <span class="platform-tag">X</span>
+            <span class="platform-tag">YouTube</span>
+          </div>
+        </div>
+        <div class="oshi-badge">
+          <span class="update-badge">新着 8件</span>
+          <span class="update-time">30分前</span>
+        </div>
+      </div>
+
+      <!-- Add oshi -->
+      <div class="add-oshi">
+        <span>＋</span>
+        <span>推しを追加する（プレミアムで無制限）</span>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="bottom-nav">
+      <div class="nav-item">
+        <div class="nav-icon">📰</div>
+        <div class="nav-label">ダイジェスト</div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">📅</div>
+        <div class="nav-label">スケジュール</div>
+      </div>
+      <div class="nav-item active">
+        <div class="nav-icon">💜</div>
+        <div class="nav-label">推し一覧</div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">👤</div>
+        <div class="nav-label">マイページ</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== SCREEN 3: PRICING ========== -->
+<div class="phone-frame" id="screen3">
+  <div class="notch"></div>
+  <div class="status-bar">
+    <span class="status-time">9:41</span>
+    <div class="status-icons"><span>●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+
+  <div class="screen-content">
+
+    <div class="pricing-header">
+      <h2>プランを選ぶ 💜</h2>
+      <p>子育ての合間に推しを追いかける<br>あなたのためのプラン</p>
+    </div>
+
+    <div class="pricing-toggle">
+      <span class="toggle-label">月払い</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+      <span class="toggle-label active">年払い</span>
+      <span class="save-badge">2ヶ月分お得</span>
+    </div>
+
+    <div class="plan-cards">
+
+      <!-- Free -->
+      <div class="plan-card">
+        <div class="plan-name">🌸 フリー</div>
+        <div class="plan-desc">まずは試してみたい方へ</div>
+        <div class="plan-price-row">
+          <div class="plan-price free">無料</div>
+        </div>
+        <div class="plan-features">
+          <div class="feature-item"><div class="feature-check">✓</div>推し1名まで登録</div>
+          <div class="feature-item"><div class="feature-check">✓</div>週次ダイジェスト（メール配信）</div>
+          <div class="feature-item"><div class="feature-check">✓</div>X・YouTube 情報収集</div>
+          <div class="feature-item muted"><div class="feature-x">✕</div>複数推し登録</div>
+          <div class="feature-item muted"><div class="feature-x">✕</div>スケジュール通知</div>
+        </div>
+        <button class="plan-btn secondary">無料で始める</button>
+      </div>
+
+      <!-- Standard (Popular) -->
+      <div class="plan-card popular">
+        <div class="popular-badge">🔥 人気No.1</div>
+        <div class="plan-name">💜 スタンダード</div>
+        <div class="plan-desc">子持ち推し活ママの定番プラン</div>
+        <div class="plan-price-row">
+          <div class="plan-price">490</div>
+          <div class="plan-price-unit">円 / 月</div>
+        </div>
+        <div class="plan-features">
+          <div class="feature-item"><div class="feature-check">✓</div>推し3名まで登録</div>
+          <div class="feature-item"><div class="feature-check">✓</div>週次ダイジェスト（メール配信）</div>
+          <div class="feature-item"><div class="feature-check">✓</div>X・YouTube・Weverse対応</div>
+          <div class="feature-item"><div class="feature-check">✓</div>スケジュール通知</div>
+          <div class="feature-item"><div class="feature-check">✓</div>SNSシェアカード生成</div>
+          <div class="feature-item muted"><div class="feature-x">✕</div>推し無制限登録</div>
+        </div>
+        <button class="plan-btn primary">7日間無料で試す</button>
+      </div>
+
+      <!-- Premium -->
+      <div class="plan-card">
+        <div class="plan-name">⭐ プレミアム</div>
+        <div class="plan-desc">本気の推し活ママへ</div>
+        <div class="plan-price-row">
+          <div class="plan-price">980</div>
+          <div class="plan-price-unit">円 / 月</div>
+        </div>
+        <div class="plan-features">
+          <div class="feature-item"><div class="feature-check">✓</div>推し無制限登録</div>
+          <div class="feature-item"><div class="feature-check">✓</div>全プラットフォーム対応</div>
+          <div class="feature-item"><div class="feature-check">✓</div>速報アラート機能</div>
+          <div class="feature-item"><div class="feature-check">✓</div>キーワードカスタム設定</div>
+          <div class="feature-item"><div class="feature-check">✓</div>ダーク推し活モード 🌙</div>
+        </div>
+        <button class="plan-btn secondary">プレミアムで始める</button>
+      </div>
+
+    </div>
+
+    <div class="pricing-footer">
+      <p>🔒 クレジットカード不要で7日間トライアル<br><strong>いつでもキャンセル可能</strong>・解約手数料なし<br>月のコーヒー1杯分で推し活が変わります ☕</p>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="bottom-nav">
+      <div class="nav-item">
+        <div class="nav-icon">📰</div>
+        <div class="nav-label">ダイジェスト</div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">📅</div>
+        <div class="nav-label">スケジュール</div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">💜</div>
+        <div class="nav-label">推し一覧</div>
+      </div>
+      <div class="nav-item active">
+        <div class="nav-icon">👤</div>
+        <div class="nav-label">マイページ</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function showScreen(num, btn) {
+    document.querySelectorAll('.phone-frame').forEach(f => f.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('screen' + num).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
