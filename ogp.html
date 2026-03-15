@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1200">
+<title>OshiDigest - Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #9B72CF;
+    --secondary: #F4A7C3;
+    --accent: #FFD6EC;
+    --bg: #FDFAFF;
+    --surface: #F5EDFF;
+    --text-primary: #2D2040;
+    --text-secondary: #7B6F8A;
+    --gradient-main: linear-gradient(135deg, #9B72CF 0%, #F4A7C3 100%);
+    --font: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: linear-gradient(145deg, #EDE0FF 0%, #FFD6EC 50%, #F5EDFF 100%);
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 40px;
+    gap: 32px;
+  }
+
+  /* LEFT: Copy */
+  .left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    width: 44px; height: 44px;
+    background: var(--gradient-main);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .logo-text {
+    font-size: 22px;
+    font-weight: 800;
+    background: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tagline {
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+  .tagline span {
+    background: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .sub {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .feature-dot {
+    width: 22px; height: 22px;
+    background: var(--gradient-main);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .cta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gradient-main);
+    color: white;
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 800;
+    width: fit-content;
+    box-shadow: 0 4px 20px rgba(155,114,207,0.4);
+  }
+
+  /* RIGHT: 3 phones */
+  .phones {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .mini-phone {
+    width: 160px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(45,32,64,0.25), 0 0 0 5px #2D2040, 0 0 0 7px #1a1025;
+    background: var(--bg);
+  }
+  .mini-phone.center {
+    width: 175px;
+    transform: translateY(-12px);
+    box-shadow: 0 12px 40px rgba(155,114,207,0.4), 0 0 0 5px #2D2040, 0 0 0 7px #1a1025;
+  }
+
+  /* Phone screens */
+  .phone-status {
+    background: white;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  /* Screen 1 */
+  .s1-cover {
+    background: var(--gradient-main);
+    padding: 10px 12px 14px;
+  }
+  .s1-week { font-size: 7px; font-weight: 700; color: rgba(255,255,255,0.8); margin-bottom: 2px; }
+  .s1-title { font-size: 16px; font-weight: 800; color: white; line-height: 1.2; margin-bottom: 3px; }
+  .s1-date { font-size: 7px; color: rgba(255,255,255,0.75); margin-bottom: 8px; }
+  .s1-chip {
+    display: inline-flex; align-items: center; gap: 3px;
+    background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 999px; padding: 3px 8px;
+    font-size: 8px; font-weight: 700; color: white;
+  }
+  .s1-stats { display: flex; gap: 5px; padding: 8px 10px 4px; }
+  .s1-stat {
+    flex: 1; background: white; border-radius: 8px; padding: 6px 4px; text-align: center;
+    box-shadow: 0 1px 4px rgba(155,114,207,0.12);
+  }
+  .s1-stat .n { font-size: 14px; font-weight: 800; color: var(--primary); }
+  .s1-stat .l { font-size: 6px; color: var(--text-secondary); margin-top: 1px; }
+  .s1-ach {
+    margin: 4px 8px;
+    background: linear-gradient(135deg, #F5EDFF, #FFD6EC);
+    border-radius: 8px; padding: 7px 8px;
+    display: flex; align-items: center; gap: 6px;
+    border: 1px solid var(--accent);
+  }
+  .s1-ach-e { font-size: 14px; }
+  .s1-ach-t strong { font-size: 8px; font-weight: 800; color: var(--text-primary); display: block; }
+  .s1-ach-t span { font-size: 7px; color: var(--text-secondary); }
+  .s1-news-h {
+    padding: 6px 10px 4px;
+    font-size: 9px; font-weight: 800; color: var(--text-primary);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .s1-news-icon {
+    width: 14px; height: 14px; background: #2D2040;
+    border-radius: 4px; display: flex; align-items: center; justify-content: center;
+    font-size: 7px; color: white;
+  }
+  .s1-news-card {
+    margin: 0 8px 5px;
+    background: white; border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(155,114,207,0.1);
+    overflow: hidden;
+  }
+  .s1-news-img {
+    height: 44px; background: var(--gradient-main);
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+  }
+  .s1-news-body { padding: 5px 7px 6px; }
+  .s1-news-title { font-size: 8px; font-weight: 700; color: var(--text-primary); line-height: 1.3; margin-bottom: 3px; }
+  .s1-news-sub { font-size: 7px; color: var(--text-secondary); line-height: 1.5; }
+  .s1-bottom-nav {
+    background: rgba(253,250,255,0.95); border-top: 1px solid var(--surface);
+    display: flex; justify-content: space-around; padding: 5px 0 8px;
+  }
+  .s1-nav { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+  .s1-nav .ni { font-size: 11px; }
+  .s1-nav .nl { font-size: 5px; color: var(--text-secondary); }
+  .s1-nav.a .nl { color: var(--primary); font-weight: 700; }
+
+  /* Screen 2 */
+  .s2-head {
+    background: var(--gradient-main);
+    padding: 12px 12px 16px;
+  }
+  .s2-g { font-size: 8px; color: rgba(255,255,255,0.8); margin-bottom: 2px; }
+  .s2-u { font-size: 13px; font-weight: 800; color: white; margin-bottom: 8px; }
+  .s2-row { display: flex; gap: 5px; }
+  .s2-stat {
+    flex: 1; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 6px; padding: 5px 4px; text-align: center;
+  }
+  .s2-stat .n { font-size: 13px; font-weight: 800; color: white; }
+  .s2-stat .l { font-size: 6px; color: rgba(255,255,255,0.8); }
+  .s2-section { font-size: 9px; font-weight: 800; color: var(--text-primary); padding: 8px 10px 5px; }
+  .s2-next {
+    margin: 0 8px 5px;
+    background: white; border-radius: 8px; padding: 7px 8px;
+    display: flex; align-items: center; gap: 7px;
+    border: 1px solid var(--accent);
+    box-shadow: 0 1px 4px rgba(155,114,207,0.1);
+  }
+  .s2-next-i { font-size: 14px; }
+  .s2-next-info { flex: 1; }
+  .s2-next-lbl { font-size: 7px; font-weight: 700; color: var(--primary); }
+  .s2-next-t { font-size: 9px; font-weight: 700; color: var(--text-primary); }
+  .s2-next-d { font-size: 7px; color: var(--text-secondary); }
+  .s2-cd {
+    background: var(--gradient-main); color: white;
+    border-radius: 6px; padding: 4px 7px; text-align: center; flex-shrink: 0;
+  }
+  .s2-cd .days { font-size: 14px; font-weight: 800; line-height: 1; }
+  .s2-cd .dl { font-size: 6px; }
+  .s2-banner {
+    margin: 0 8px 5px;
+    background: var(--gradient-main); border-radius: 8px; padding: 8px 10px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .s2-banner-i { font-size: 16px; }
+  .s2-banner-t strong { font-size: 9px; font-weight: 800; color: white; display: block; }
+  .s2-banner-t span { font-size: 7px; color: rgba(255,255,255,0.8); }
+  .s2-oshi {
+    margin: 0 8px 4px;
+    background: white; border-radius: 8px; padding: 7px 8px;
+    display: flex; align-items: center; gap: 7px;
+    box-shadow: 0 1px 4px rgba(155,114,207,0.1);
+  }
+  .s2-av {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--gradient-main);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0;
+    border: 1.5px solid var(--accent);
+  }
+  .s2-av.b { background: linear-gradient(135deg, #72B5CF, #A4D4F4); }
+  .s2-av.p { background: linear-gradient(135deg, #CF72AB, #F4A4D0); }
+  .s2-oi { flex: 1; }
+  .s2-on { font-size: 9px; font-weight: 800; color: var(--text-primary); }
+  .s2-os { font-size: 7px; color: var(--text-secondary); }
+  .s2-badge {
+    background: var(--gradient-main); color: white;
+    border-radius: 999px; padding: 2px 6px; font-size: 7px; font-weight: 700;
+  }
+  .s2-bottom-nav {
+    background: rgba(253,250,255,0.95); border-top: 1px solid var(--surface);
+    display: flex; justify-content: space-around; padding: 5px 0 8px; margin-top: 4px;
+  }
+
+  /* Screen 3 */
+  .s3-head {
+    background: var(--gradient-main);
+    padding: 12px 12px 16px; text-align: center;
+  }
+  .s3-head h2 { font-size: 14px; font-weight: 800; color: white; margin-bottom: 3px; }
+  .s3-head p { font-size: 7px; color: rgba(255,255,255,0.8); line-height: 1.5; }
+  .s3-plans { padding: 8px 8px 0; display: flex; flex-direction: column; gap: 6px; }
+  .s3-plan {
+    background: white; border-radius: 8px; padding: 8px 10px;
+    box-shadow: 0 1px 4px rgba(155,114,207,0.1);
+    border: 1.5px solid transparent;
+    position: relative; overflow: hidden;
+  }
+  .s3-plan.pop { border-color: var(--primary); box-shadow: 0 2px 10px rgba(155,114,207,0.2); }
+  .s3-pop-tag {
+    position: absolute; top: 0; right: 0;
+    background: var(--gradient-main); color: white;
+    font-size: 7px; font-weight: 800; padding: 3px 8px;
+    border-radius: 0 8px 0 8px;
+  }
+  .s3-plan-name { font-size: 10px; font-weight: 800; color: var(--text-primary); margin-bottom: 1px; }
+  .s3-plan-desc { font-size: 7px; color: var(--text-secondary); margin-bottom: 5px; }
+  .s3-price-row { display: flex; align-items: baseline; gap: 2px; margin-bottom: 5px; }
+  .s3-price {
+    font-size: 20px; font-weight: 800;
+    background: var(--gradient-main);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .s3-unit { font-size: 8px; color: var(--text-secondary); font-weight: 700; }
+  .s3-feats { display: flex; flex-direction: column; gap: 3px; margin-bottom: 6px; }
+  .s3-feat { display: flex; align-items: center; gap: 4px; font-size: 7px; color: var(--text-primary); }
+  .s3-check {
+    width: 11px; height: 11px; background: #B5E8C8;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 6px; flex-shrink: 0;
+  }
+  .s3-x {
+    width: 11px; height: 11px; background: var(--surface);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 6px; color: var(--text-secondary); flex-shrink: 0;
+  }
+  .s3-btn {
+    width: 100%; padding: 6px; border-radius: 999px;
+    font-size: 8px; font-weight: 800; font-family: var(--font);
+    cursor: pointer; border: none;
+  }
+  .s3-btn.pri { background: var(--gradient-main); color: white; }
+  .s3-btn.sec { background: var(--surface); color: var(--primary); border: 1.5px solid #C4A4E8; }
+  .s3-footer { padding: 6px 10px 8px; text-align: center; font-size: 7px; color: var(--text-secondary); line-height: 1.6; }
+  .s3-footer strong { color: var(--primary); }
+  .s3-bottom-nav {
+    background: rgba(253,250,255,0.95); border-top: 1px solid var(--surface);
+    display: flex; justify-content: space-around; padding: 5px 0 8px;
+  }
+</style>
+</head>
+<body>
+
+<!-- LEFT COPY -->
+<div class="left">
+  <div class="logo">
+    <div class="logo-icon">💜</div>
+    <div class="logo-text">OshiDigest</div>
+  </div>
+
+  <div class="tagline">
+    子育て中でも、<br><span>推しを諦めない</span>ために。
+  </div>
+
+  <div class="sub">
+    X・YouTube・Weverseを自動収集<br>
+    AIが週1回まとめてメールで届けます
+  </div>
+
+  <div class="features">
+    <div class="feature"><div class="feature-dot">✓</div>5つのプラットフォームを自動収集</div>
+    <div class="feature"><div class="feature-dot">✓</div>週1回・5分で推しに追いつける</div>
+    <div class="feature"><div class="feature-dot">✓</div>月490円〜で始められる</div>
+  </div>
+
+  <div class="cta-badge">🌸 先行登録受付中</div>
+</div>
+
+<!-- RIGHT PHONES -->
+<div class="phones">
+
+  <!-- Phone 1: Digest -->
+  <div class="mini-phone">
+    <div class="phone-status"><span>9:41</span><span>●●● 🔋</span></div>
+    <div class="s1-cover">
+      <div class="s1-week">✨ WEEK 12 / 2025</div>
+      <div class="s1-title">今週の<br>OshiDigest</div>
+      <div class="s1-date">3月10日〜3月16日</div>
+      <div class="s1-chip">💜 BTS を追跡中</div>
+    </div>
+    <div class="s1-stats">
+      <div class="s1-stat"><div class="n">47</div><div class="l">今週の投稿</div></div>
+      <div class="s1-stat"><div class="n">5</div><div class="l">プラットフォーム</div></div>
+      <div class="s1-stat"><div class="n">3</div><div class="l">注目ニュース</div></div>
+    </div>
+    <div class="s1-ach">
+      <div class="s1-ach-e">🏆</div>
+      <div class="s1-ach-t">
+        <strong>12週連続チェック完了！</strong>
+        <span>トップ推し活ママです🥺</span>
+      </div>
+    </div>
+    <div class="s1-news-h"><div class="s1-news-icon">𝕏</div> X ハイライト</div>
+    <div class="s1-news-card">
+      <div class="s1-news-img">🎤</div>
+      <div class="s1-news-body">
+        <div class="s1-news-title">JIMINが新ソロアルバムのリリースをサプライズ発表</div>
+        <div class="s1-news-sub">3月20日にリリース。ファンの間で「待ってた」「泣いた」の声が続出。</div>
+      </div>
+    </div>
+    <div class="s1-bottom-nav">
+      <div class="s1-nav a"><div class="ni">📰</div><div class="nl">ダイジェスト</div></div>
+      <div class="s1-nav"><div class="ni">📅</div><div class="nl">スケジュール</div></div>
+      <div class="s1-nav"><div class="ni">💜</div><div class="nl">推し一覧</div></div>
+      <div class="s1-nav"><div class="ni">👤</div><div class="nl">マイページ</div></div>
+    </div>
+  </div>
+
+  <!-- Phone 2: Dashboard (center/featured) -->
+  <div class="mini-phone center">
+    <div class="phone-status"><span>9:41</span><span>●●● 🔋</span></div>
+    <div class="s2-head">
+      <div class="s2-g">おかえり 👋</div>
+      <div class="s2-u">yamamotoさんの推し活 💜</div>
+      <div class="s2-row">
+        <div class="s2-stat"><div class="n">3</div><div class="l">推し登録中</div></div>
+        <div class="s2-stat"><div class="n">12</div><div class="l">連続週チェック</div></div>
+        <div class="s2-stat"><div class="n">138</div><div class="l">総ニュース数</div></div>
+      </div>
+    </div>
+    <div class="s2-section">⚡ 直近のイベント</div>
+    <div class="s2-next">
+      <div class="s2-next-i">🎤</div>
+      <div class="s2-next-info">
+        <div class="s2-next-lbl">次のイベント</div>
+        <div class="s2-next-t">JIMINソロアルバム発売</div>
+        <div class="s2-next-d">2025年3月20日（木）</div>
+      </div>
+      <div class="s2-cd"><div class="days">4</div><div class="dl">days</div></div>
+    </div>
+    <div class="s2-banner">
+      <div class="s2-banner-i">📬</div>
+      <div class="s2-banner-t">
+        <strong>今週のダイジェストが届きました</strong>
+        <span>47件の情報をまとめました · 3分前</span>
+      </div>
+    </div>
+    <div class="s2-section">💜 フォロー中の推し</div>
+    <div class="s2-oshi">
+      <div class="s2-av">🎤</div>
+      <div class="s2-oi"><div class="s2-on">BTS</div><div class="s2-os">K-POP / HYBE</div></div>
+      <div class="s2-badge">新着 12件</div>
+    </div>
+    <div class="s2-oshi">
+      <div class="s2-av b">❄️</div>
+      <div class="s2-oi"><div class="s2-on">Snow Man</div><div class="s2-os">J-POP / Johnny's</div></div>
+      <div class="s2-badge">新着 5件</div>
+    </div>
+    <div class="s2-oshi">
+      <div class="s2-av p">🌸</div>
+      <div class="s2-oi"><div class="s2-on">にじさんじ（叶）</div><div class="s2-os">VTuber / ANYCOLOR</div></div>
+      <div class="s2-badge">新着 8件</div>
+    </div>
+    <div class="s2-bottom-nav">
+      <div class="s1-nav"><div class="ni">📰</div><div class="nl">ダイジェスト</div></div>
+      <div class="s1-nav"><div class="ni">📅</div><div class="nl">スケジュール</div></div>
+      <div class="s1-nav a"><div class="ni">💜</div><div class="nl">推し一覧</div></div>
+      <div class="s1-nav"><div class="ni">👤</div><div class="nl">マイページ</div></div>
+    </div>
+  </div>
+
+  <!-- Phone 3: Pricing -->
+  <div class="mini-phone">
+    <div class="phone-status"><span>9:41</span><span>●●● 🔋</span></div>
+    <div class="s3-head">
+      <h2>プランを選ぶ 💜</h2>
+      <p>子育ての合間に推しを追いかける<br>あなたのためのプラン</p>
+    </div>
+    <div class="s3-plans">
+      <div class="s3-plan">
+        <div class="s3-plan-name">🌸 フリー</div>
+        <div class="s3-price-row"><div class="s3-price" style="font-size:14px;">無料</div></div>
+        <div class="s3-feats">
+          <div class="s3-feat"><div class="s3-check">✓</div>推し1名・週次ダイジェスト</div>
+          <div class="s3-feat"><div class="s3-x">✕</div><span style="color:#A89FBA">複数推し登録</span></div>
+        </div>
+        <button class="s3-btn sec">無料で始める</button>
+      </div>
+      <div class="s3-plan pop">
+        <div class="s3-pop-tag">🔥 人気No.1</div>
+        <div class="s3-plan-name">💜 スタンダード</div>
+        <div class="s3-price-row"><div class="s3-price">490</div><div class="s3-unit">円/月</div></div>
+        <div class="s3-feats">
+          <div class="s3-feat"><div class="s3-check">✓</div>推し3名・全プラットフォーム</div>
+          <div class="s3-feat"><div class="s3-check">✓</div>スケジュール通知・シェアカード</div>
+        </div>
+        <button class="s3-btn pri">7日間無料で試す</button>
+      </div>
+      <div class="s3-plan">
+        <div class="s3-plan-name">⭐ プレミアム</div>
+        <div class="s3-price-row"><div class="s3-price">980</div><div class="s3-unit">円/月</div></div>
+        <div class="s3-feats">
+          <div class="s3-feat"><div class="s3-check">✓</div>推し無制限・速報アラート</div>
+          <div class="s3-feat"><div class="s3-check">✓</div>キーワード設定・夜活モード🌙</div>
+        </div>
+        <button class="s3-btn sec">プレミアムで始める</button>
+      </div>
+    </div>
+    <div class="s3-footer">🔒 7日間無料トライアル<br><strong>いつでもキャンセル可</strong></div>
+    <div class="s3-bottom-nav">
+      <div class="s1-nav"><div class="ni">📰</div><div class="nl">ダイジェスト</div></div>
+      <div class="s1-nav"><div class="ni">📅</div><div class="nl">スケジュール</div></div>
+      <div class="s1-nav"><div class="ni">💜</div><div class="nl">推し一覧</div></div>
+      <div class="s1-nav a"><div class="ni">👤</div><div class="nl">マイページ</div></div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
